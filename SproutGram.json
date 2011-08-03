@@ -1,0 +1,32 @@
+{
+  "name": "SproutGram",
+  "bpm": "1.0.0",
+  "bpm:build": {
+    "bpm_libs.js": {
+      "directories": [
+
+      ],
+      "minifier": "uglify-js"
+    },
+    "bpm_styles.css": {
+      "directories": [
+
+      ]
+    },
+    "SproutGram/bpm_libs.js": {
+      "directories": [
+        "app"
+      ],
+      "minifier": "uglify-js"
+    },
+    "SproutGram/bpm_styles.css": {
+      "directories": [
+        "css"
+      ]
+    }
+  },
+  "dependencies": {
+    "sproutcore": ">= 0-pre",
+    "sproutcore-touch": ">= 0-pre"
+  }
+}

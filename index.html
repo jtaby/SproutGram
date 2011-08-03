@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="assets/bpm_styles.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="assets/SproutGram/bpm_styles.css" type="text/css" media="screen" charset="utf-8" />
+
+    <meta name="viewport" content="width=720, maximum-scale=1.0" />
+    
+
+    <title>SproutGram</title>
+  </head>
+  <body>
+    <script type="text/html">
+      {{#collection SproutGram.PhotosView}}
+        {{#view SproutGram.PhotoView classNames="photo"}}
+          <img height="256" width="256" {{ bindAttr src="parentView.content.standard_res"}}>
+        {{/view}}
+      {{/collection}}
+    </script>
+  </body>
+
+  <script type="text/javascript" src="assets/bpm_libs.js"></script>
+  <script type="text/javascript" src="assets/SproutGram/bpm_libs.js"></script>
+</html>
