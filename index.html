@@ -12,7 +12,7 @@
     <script type="text/html">
       {{#collection SproutGram.PhotosView}}
         {{#view SproutGram.PhotoView classNames="photo"}}
-          <img height="256" width="256" {{ bindAttr src="parentView.content.standard_res"}}>
+          <canvas class="image_canvas" height="256" width="256"></canvas>
         {{/view}}
       {{/collection}}
     </script>
