@@ -1,8 +1,11 @@
 /* TODO: Add your app CSS here */
 body {
   margin:0;
+  -webkit-perspective: 0;
 }
 
 .photo {
+  position:relative;
   float:left;
+  z-index: 1;
 }

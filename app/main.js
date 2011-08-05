@@ -19,33 +19,37 @@ SproutGram.PhotosView = SC.CollectionView.extend({
 
 SproutGram.PhotoView = SC.View.extend({
   scale: 1,
+  translateZ: 0,
   translate: { x: 0, y: 0 },
 
   pinchStart: function(recognizer) {
+    console.log("pinchstart" + this.toString());
     this.$().css('z-index',10);
+    console.log(this.$()[0].style.cssText);
   },
 
   pinchChange: function(recognizer) {
     this.scale = recognizer.get('scale');
     this._applyTransforms();
+    return false;
   },
 
   pinchEnd: function(recognizer) {
-    var velocity = recognizer.get('velocity');
-    console.log(velocity);
+    this._resetTransforms();
+    //var velocity = recognizer.get('velocity');
 
-    if (velocity < 0) {
-      this.$().css('WebkitTransition','-webkit-transform 0.3s ease-out');
-      this.scale = 1;
-      this.translate = {x:0,y:0};
-      this._applyTransforms();
-      this.$().css('z-index',0);
+    //if (velocity < 0) {
+      //this.$().css('WebkitTransition','-webkit-transform 0.3s ease-out');
+      //this.scale = 1;
+      //this.translate = {x:0,y:0};
+      //this._applyTransforms();
+      //this.$().css('z-index',0);
 
-      var self=this;
-      window.setTimeout(function() {
-        this.$().css('WebkitTransition','');
-      }, 30);
-    }
+      //var self=this;
+      //window.setTimeout(function() {
+        //this.$().css('WebkitTransition','');
+      //}, 30);
+    //}
   },
 
   panOptions: {
@@ -55,10 +59,39 @@ SproutGram.PhotoView = SC.View.extend({
   panChange: function(recognizer) {
     this.translate = recognizer.get('translation');
     this._applyTransforms();
+    return false;
+  },
+
+  panEnd: function() {
+    this._resetTransforms();
+  },
+
+  tapEnd: function(recognizer) {
+    this.translateZ = 40;
+    this._applyTransforms();
+  },
+
+  _resetTransforms: function() {
+    if (this._isResetting) return;
+    this._isResetting = true;
+    this.$().css('WebkitTransition','-webkit-transform 0.3s ease-out');
+    this.scale = 1;
+    this.translate = {x:0,y:0};
+    this._applyTransforms();
+
+    var self=this;
+    console.log("beforend" + this.toString());
+    this.$().bind('webkitTransitionEnd', function( event ) { 
+      console.log("afterend" + self.toString());
+      self.$().css('z-index',1);
+      self.$().css('WebkitTransition','');
+      console.log(self.$()[0].style.cssText);
+      self._isResetting = false;
+    });
   },
 
   _applyTransforms: function() {
-    var string = 'translate3d('+this.translate.x+'px,'+this.translate.y+'px,0)';
+    var string = 'translate3d('+this.translate.x+'px,'+this.translate.y+'px,'+this.translateZ+'px)';
         string += ' scale3d('+this.scale+','+this.scale+',1)';
     this.$().css('-webkit-transform',string);
   },
