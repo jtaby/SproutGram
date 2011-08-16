@@ -26,7 +26,7 @@
     }
   },
   "dependencies": {
-    "sproutcore": ">= 0-pre",
-    "sproutcore-touch": ">= 0-pre"
+    "sproutcore": "~> 2.0.beta.3",
+    "sproutcore-touch": "~> 2.0"
   }
 }

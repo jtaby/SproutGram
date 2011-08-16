@@ -21,17 +21,23 @@ SproutGram.PhotoView = SC.View.extend({
   scale: 1,
   translateZ: 0,
   translate: { x: 0, y: 0 },
+  
+  touchStart: function(evt) {
+    this.$().css('z-index',10);
+  },
+  
+  touchEnd: function(evt) {
+  },
 
   pinchStart: function(recognizer) {
     console.log("pinchstart" + this.toString());
-    this.$().css('z-index',10);
     console.log(this.$()[0].style.cssText);
   },
 
-  pinchChange: function(recognizer) {
-    this.scale = recognizer.get('scale');
-    this._applyTransforms();
-    return false;
+  pinchChange: function(recognizer) {    
+    this.$().css('scale',function(index, value) {
+      return recognizer.get('scale') * value
+    });
   },
 
   pinchEnd: function(recognizer) {
@@ -43,7 +49,6 @@ SproutGram.PhotoView = SC.View.extend({
       //this.scale = 1;
       //this.translate = {x:0,y:0};
       //this._applyTransforms();
-      //this.$().css('z-index',0);
 
       //var self=this;
       //window.setTimeout(function() {
@@ -57,43 +62,26 @@ SproutGram.PhotoView = SC.View.extend({
   },
 
   panChange: function(recognizer) {
-    this.translate = recognizer.get('translation');
-    this._applyTransforms();
-    return false;
+    var val = recognizer.get('translation');
+  
+    this.$().css({
+      translateX: '%@=%@'.fmt((val.x < 0)? '-' : '+',Math.abs(val.x)),
+      translateY: '%@=%@'.fmt((val.y < 0)? '-' : '+',Math.abs(val.y))
+    });
   },
 
   panEnd: function() {
     this._resetTransforms();
   },
 
-  tapEnd: function(recognizer) {
-    this.translateZ = 40;
-    this._applyTransforms();
-  },
-
   _resetTransforms: function() {
-    if (this._isResetting) return;
-    this._isResetting = true;
-    this.$().css('WebkitTransition','-webkit-transform 0.3s ease-out');
-    this.scale = 1;
-    this.translate = {x:0,y:0};
-    this._applyTransforms();
-
-    var self=this;
-    console.log("beforend" + this.toString());
-    this.$().bind('webkitTransitionEnd', function( event ) { 
-      console.log("afterend" + self.toString());
-      self.$().css('z-index',1);
-      self.$().css('WebkitTransition','');
-      console.log(self.$()[0].style.cssText);
-      self._isResetting = false;
-    });
-  },
-
-  _applyTransforms: function() {
-    var string = 'translate3d('+this.translate.x+'px,'+this.translate.y+'px,'+this.translateZ+'px)';
-        string += ' scale3d('+this.scale+','+this.scale+',1)';
-    this.$().css('-webkit-transform',string);
+    var self = this;
+    
+    this.$().animate({
+      scale: 1,
+      translateX: 0,
+      translateY: 0
+    }, 300, function() { self.$().css('z-index',1); })
   },
 
   didInsertElement: function() {
