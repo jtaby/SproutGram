@@ -1,6 +1,7 @@
 
 var numCols = 4;
 var pictureDimension = 256;
+var animationDuration = 200;
 
 SproutGram.PhotoView = SC.View.extend({
   
@@ -8,12 +9,29 @@ SproutGram.PhotoView = SC.View.extend({
   
   isZoomedIn: false,
   
+  tapEnd: function() {
+    if (this.get('isZoomedIn')) {
+      this._resetTransforms();
+    }
+    else {
+      this._centerPhoto();
+    }
+  },
+  
   touchStart: function(evt) {
     this.$().css('z-index',10);
     $('#curtain').css({
      zIndex: 2,
      opacity: (this.get('isZoomedIn'))? 0.8 : 0
     });
+  },
+  
+  mouseDown: function() {
+    this.touchStart();
+  },
+  
+  click: function() {
+    this.tapEnd();
   },
 
   pinchChange: function(recognizer) {    
@@ -32,7 +50,7 @@ SproutGram.PhotoView = SC.View.extend({
   pinchEnd: function(recognizer) {
     var velocity = recognizer.get('velocity');
     
-    if (velocity > 0) {
+    if (velocity >= 0) {
       this._centerPhoto();
     }
     else {
@@ -60,7 +78,7 @@ SproutGram.PhotoView = SC.View.extend({
     
     $('#curtain').animate({
       opacity:0
-    },300);
+    },animationDuration);
     
     this.$().animate({
       scale: 1,
@@ -70,7 +88,7 @@ SproutGram.PhotoView = SC.View.extend({
       left: position.left,
       width: position.width,
       height: position.height,
-    }, 300, function() { 
+    }, animationDuration, function() { 
       $('#curtain').css('z-index',0);
       self.$().css('z-index',1);
     })
@@ -82,10 +100,10 @@ SproutGram.PhotoView = SC.View.extend({
       
     $('#curtain').animate({
       opacity:0.8
-    },300);
+    },animationDuration);
       
     this.$().animate({
-      scale: 2,
+      scale: 1.5,
       translateX: 0,
       translateY: 0,
       
@@ -93,7 +111,7 @@ SproutGram.PhotoView = SC.View.extend({
       left: 0,
       width: window.innerWidth,
       height: window.innerHeight
-    }, 300)
+    },animationDuration)
   },
   
   willInsertElement: function() {
