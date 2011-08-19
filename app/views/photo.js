@@ -4,15 +4,16 @@ var pictureDimension = 256;
 
 SproutGram.PhotoView = SC.View.extend({
   
-  itemIndex: null,
+  itemIndexBinding: 'parentView.content.itemIndex',
+  
+  isZoomedIn: false,
   
   touchStart: function(evt) {
     this.$().css('z-index',10);
-    $('#curtain').css('z-index',2);
-  },
-  
-  tapEnd: function() {
-    this._centerPhoto();
+    $('#curtain').css({
+     zIndex: 2,
+     opacity: (this.get('isZoomedIn'))? 0.8 : 0
+    });
   },
 
   pinchChange: function(recognizer) {    
@@ -20,7 +21,7 @@ SproutGram.PhotoView = SC.View.extend({
     var newScale = recognizer.get('scale');
     var curScale = jq.css('scale');
     
-    var boundedScale = Math.max(1,Math.min(2, curScale * newScale));
+    var boundedScale = Math.max(1,Math.min(1.8, curScale * newScale));
     $('#curtain').css('opacity',boundedScale-1);
     
     this.$().css('scale',function(index, value) {
@@ -55,6 +56,7 @@ SproutGram.PhotoView = SC.View.extend({
   _resetTransforms: function(accepted) {
     var self = this;
     var position = this._resetPosition();
+    this.set('isZoomedIn',false);
     
     $('#curtain').animate({
       opacity:0
@@ -75,9 +77,11 @@ SproutGram.PhotoView = SC.View.extend({
   },  
   
   _centerPhoto: function() {
+    var self = this;
+    this.set('isZoomedIn',true);
       
     $('#curtain').animate({
-      opacity:1
+      opacity:0.8
     },300);
       
     this.$().animate({
@@ -98,7 +102,7 @@ SproutGram.PhotoView = SC.View.extend({
   
   _resetPosition: function() {
     var el = this.$();
-    var idx = this.getPath('parentView.content.itemIndex');
+    var idx = this.get('itemIndex');
     
     var row = Math.floor(idx / numCols);
     var col = idx % numCols;
