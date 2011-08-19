@@ -2,10 +2,30 @@
 body {
   margin:0;
   -webkit-perspective: 0;
+  background: black;
+}
+
+#curtain {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom:0;
+  left:0;
+  background: black;
+  z-index: 0;
+  -webkit-transform: translate3d(0,0,0);
 }
 
 .photo {
-  position:relative;
-  float:left;
+  position:absolute;
   z-index: 1;
+}
+
+.photo canvas {
+  position: absolute;
+  top:50%;
+  left:50%;
+  
+  margin-top: -128px;
+  margin-left: -128px;
 }
