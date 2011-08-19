@@ -10,6 +10,7 @@ SproutGram.PhotoView = SC.View.extend({
   isZoomedIn: false,
   
   tapEnd: function() {
+    console.log('tapEnd');
     if (this.get('isZoomedIn')) {
       this._resetTransforms();
     }
@@ -19,6 +20,7 @@ SproutGram.PhotoView = SC.View.extend({
   },
   
   touchStart: function(evt) {
+    console.log('touchStart');
     this.$().css('z-index',10);
     $('#curtain').css({
      zIndex: 2,
@@ -30,7 +32,7 @@ SproutGram.PhotoView = SC.View.extend({
     this.touchStart();
   },
   
-  click: function() {
+  mouseUp: function() {
     this.tapEnd();
   },
 
@@ -48,6 +50,7 @@ SproutGram.PhotoView = SC.View.extend({
   },
 
   pinchEnd: function(recognizer) {
+    console.log('pinchEnd');
     var velocity = recognizer.get('velocity');
     
     if (velocity >= 0) {
