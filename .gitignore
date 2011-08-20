@@ -2,3 +2,5 @@
 strobe/
 assets/
 .DS_Store
+.bundle/
+bin
