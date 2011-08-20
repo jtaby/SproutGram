@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "sproutcore": "~> 2.0.beta.3",
-    "sproutcore-touch": "2.0.beta"
+    "sproutcore-touch": "2.0.beta",
+    "coffee-script": ">= 0"
   }
 }

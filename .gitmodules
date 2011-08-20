@@ -7,3 +7,6 @@
 [submodule "packages/sproutcore-touch"]
 	path = packages/sproutcore-touch
 	url = https://github.com/sproutcore/sproutcore-touch.git
+[submodule "vendor/coffee-script"]
+	path = vendor/coffee-script
+	url = https://github.com/getbpm/coffeescript-bpm.git
