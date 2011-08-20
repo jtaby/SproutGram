@@ -13,7 +13,10 @@
       <div id="curtain"></div>
       {{#collection SproutGram.PhotosView}}
         {{#view SproutGram.PhotoView classNames="photo"}}
-          <canvas class="image_canvas" height="256" width="256"></canvas>
+          <div class="content-wrapper">
+            <canvas class="image_canvas" height="256" width="256"></canvas>
+            <div class="username">{{username}}</div>
+          </div>
         {{/view}}
       {{/collection}}
     </script>

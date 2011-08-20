@@ -1,7 +1,7 @@
 /* TODO: Add your app CSS here */
 body {
   margin:0;
-  -webkit-perspective: 0;
+  -webkit-perspective: 2000;
   background: black;
 }
 
@@ -19,13 +19,34 @@ body {
 .photo {
   position:absolute;
   z-index: 1;
+  -webkit-perspective: 2000;
 }
 
-.photo canvas {
+.photo .content-wrapper {
   position: absolute;
   top:50%;
   left:50%;
   
+  width:256px;
+  height: 256px;
+  
   margin-top: -128px;
   margin-left: -128px;
+}
+
+.photo canvas {
+  z-index:1;
+  position:absolute;
+}
+
+.username {
+  position: absolute;
+  top:25px;
+  
+  padding:10px;
+  background: #fff000;
+  font-size: 18px;
+  font-family: "Helvetica Neue";
+  font-weight: bolder;
+  z-index:2;
 }
