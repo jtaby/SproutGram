@@ -8,9 +8,9 @@ body {
 #curtain {
   position: absolute;
   top: 0;
-  right: 0;
-  bottom:0;
   left:0;
+  width: 1024px;
+  height: 1024px;
   background: black;
   z-index: 0;
   -webkit-transform: translate3d(0,0,0);
@@ -34,19 +34,35 @@ body {
   margin-left: -128px;
 }
 
-.photo canvas {
+.photo img {
   z-index:1;
   position:absolute;
+  background: black;
+}
+
+.details {
+  -webkit-transform-origin: 100% 50%;
+  width:250px;
+  margin-left:-250px;
 }
 
 .username {
-  position: absolute;
-  top:25px;
-  
   padding:10px;
   background: #fff000;
   font-size: 18px;
   font-family: "Helvetica Neue";
   font-weight: bolder;
-  z-index:2;
+  z-index:20;
+  -webkit-transform: translate3d(0,0,0);
+  margin-top:10px;
+}
+
+.title {
+  padding:10px;
+  background: #fff000;
+  font-size: 14px;
+  font-family: "Helvetica Neue";
+  z-index:20;
+  -webkit-transform: translate3d(0,0,0);
+  max-height:50px;
 }

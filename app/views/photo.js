@@ -4,7 +4,7 @@
 
 var numCols = 4;
 var pictureDimension = 256;
-var animationDuration = 200;
+var animationDuration = 500;
 var easing = "easeOutExpo";
 
 //......................................................................
@@ -31,40 +31,17 @@ SproutGram.PhotoView = SC.View.extend({
   
   itemIndexBinding: 'parentView.content.itemIndex',
   usernameBinding: 'parentView.content.username',
+  titleBinding: 'parentView.content.title',
   
   isZoomedIn: false,
     
   willInsertElement: function() {
     this.$().css(this._resetPosition());
-    this.$('.username').css({
-      rotateY: Math.PI
-    });
-  },
-
-  didInsertElement: function() {
-    var canvas = this.$('canvas.image_canvas')[0];
-    if (!canvas) return;
-
-    var image = new Image();
-    image.src = this.getPath('parentView.content.standard_res');
-
-    image.onload = function() {
-      var ctx = canvas.getContext('2d');
-
-      ctx.drawImage(image,50,50,500,500,0,0,pictureDimension,pictureDimension);
-    }
+    this._hideDetails(true);
   },
     
   //.................................................................
   // Event Handlers
-  
-  touchStart: function(evt) {
-    this.$().css('z-index',10);
-    $('#curtain').css({
-     zIndex: 2,
-     opacity: (this.get('isZoomedIn'))? 0.8 : 0
-    });
-  },
   
   tapEnd: function() {
     if (this.get('isZoomedIn')) {
@@ -74,19 +51,15 @@ SproutGram.PhotoView = SC.View.extend({
       this._centerPhoto();
     }
   },
-  
-  mouseDown: function() {
-    this.touchStart();
-  },
-  
-  mouseUp: function() {
+
+  click: function() {
+    window.shit = this;
     this.tapEnd();
   },
 
   pinchChange: function(recognizer) {    
-    var jq = this.$();
     var newScale = recognizer.get('scale');
-    var curScale = jq.css('scale');
+    var curScale = this.$().css('scale');
     
     var boundedScale = Math.max(1,Math.min(1.8, curScale * newScale));
     $('#curtain').css('opacity',boundedScale-1);
@@ -128,45 +101,47 @@ SproutGram.PhotoView = SC.View.extend({
     
     this.set('isZoomedIn',true);
       
-    $('#curtain').animate({
-      opacity:0.8
+    $('#curtain').css({
+      top: document.body.scrollTop,
+      zIndex: 2,
+      opacity: (this.get('isZoomedIn'))? 0.9 : 0
+    }).animate({
+      opacity:0.9
     }, animationDuration, easing);
       
-    this.$().animate({
+    this.$().css('z-index',10).animate({
       scale: 1,
       translateX: 0,
       translateY: 0,
-      
+
       top: document.body.scrollTop,
       left: 0,
+
       width: window.innerWidth,
       height: window.innerHeight
     }, {
-      
-      duration: animationDuration * 3, 
-      easing: easing, 
+      duration: animationDuration,
+      easing: easing,
       complete: function() {
-        setTimeout(function() {
-          self._showDetails()
-        }, 300);
+        window.setTimeout(function(){self._showDetails();},200);
       }
-      
-    })
-    
-    // this.$('.username').animate({
-    //   rotateY: 0
-    // }, 400);    
+    });       
   },
   
-  _showDetails: function() {
-    
-    this.$('.username').css({
-      'WebkitTransformOrigin': '0 50%'
-    });
+  _hideDetails: function(instant) {
+    var func = (instant === undefined)? 'animate' : 'css';
 
-    this.$('.username').animate({
+    this.$('.details').stop()[func]({
       rotateY: Math.PI
-    }, 500, "easeOutElastic");
+    }, 1000, "easeOutExpo");
+  },
+  
+  _showDetails: function(instant) {
+    var func = (instant === undefined)? 'animate' : 'css';
+
+    this.$('.details').stop()[func]({
+      rotateY: 0
+    }, 1000, "easeOutElastic");
   },
   
   _resetTransforms: function(accepted) {
@@ -178,6 +153,8 @@ SproutGram.PhotoView = SC.View.extend({
       opacity:0
     },animationDuration,easing);
     
+    this._hideDetails();
+    
     this.$().animate({
       scale: 1,
       translateX: 0,
@@ -186,12 +163,14 @@ SproutGram.PhotoView = SC.View.extend({
       left: position.left,
       width: position.width,
       height: position.height,
-    }, animationDuration, easing, function() { 
-      $('#curtain').css('z-index',0);
-      self.$().css('z-index',1);
-    });
-    this.$('.username').css({
-      rotateY: Math.PI
+    }, {
+      
+      duration: animationDuration, 
+      easing: easing ,
+      complete: function() { 
+        $('#curtain').css('z-index',0);
+        self.$().css('z-index',1);
+      }
     });
   },  
   

@@ -32,6 +32,7 @@ $(document).ready(function() {
         SproutGram.photosController.pushObject(SproutGram.PhotoModel.create({
           standard_res: image.images.standard_resolution.url,
           username: image.user.username,
+          title: (image.caption)? image.caption.text : "",
           itemIndex: i
         }));
       }

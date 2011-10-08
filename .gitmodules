@@ -1,11 +1,11 @@
 [submodule "vendor/sproutcore20"]
 	path = vendor/sproutcore20
 	url = https://github.com/sproutcore/sproutcore20.git
-[submodule "packages/TransformJS"]
-	path = packages/TransformJS
+[submodule "vendor/TransformJS"]
+	path = vendor/TransformJS
 	url = https://github.com/sproutcore/TransformJS.git
-[submodule "packages/sproutcore-touch"]
-	path = packages/sproutcore-touch
+[submodule "vendor/sproutcore-touch"]
+	path = vendor/sproutcore-touch
 	url = https://github.com/sproutcore/sproutcore-touch.git
 [submodule "vendor/coffee-script"]
 	path = vendor/coffee-script

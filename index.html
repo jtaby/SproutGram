@@ -3,9 +3,9 @@
     <link rel="stylesheet" href="assets/bpm_styles.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="assets/SproutGram/bpm_styles.css" type="text/css" media="screen" charset="utf-8" />
 
-    <meta name="viewport" content="width=720, maximum-scale=1.0" />
+    <meta name="viewport" content="width=720" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     
-
     <title>SproutGram</title>
   </head>
   <body>
@@ -14,8 +14,11 @@
       {{#collection SproutGram.PhotosView}}
         {{#view SproutGram.PhotoView classNames="photo"}}
           <div class="content-wrapper">
-            <canvas class="image_canvas" height="256" width="256"></canvas>
-            <div class="username">{{username}}</div>
+            <img class="image_canvas" {{bindAttr src="parentView.content.standard_res"}} height="256" width="256">
+            <div class="details">
+              <div class="title">{{title}}</div>
+              <div class="username">{{username}}</div>
+            </div>
           </div>
         {{/view}}
       {{/collection}}
