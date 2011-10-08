@@ -26,13 +26,23 @@ $(document).ready(function() {
     success:function(response){
       var images = response.data;
 
-      for (var i=0, l=images.length; i<l; i++) {
+      for (var i=0, l=25; i<l; i++) {
         var image = images[i];
+
+        var userComments = [];
+
+        image.comments.data.forEach(function(comment) {
+          userComments.push({
+            text: comment.text,
+            commenter: comment.from.username
+          })
+        });
 
         SproutGram.photosController.pushObject(SproutGram.PhotoModel.create({
           standard_res: image.images.standard_resolution.url,
           username: image.user.username,
-          title: (image.caption)? image.caption.text : "",
+          comments: userComments,
+          title: (image.caption)? image.caption.text : "No title",
           itemIndex: i
         }));
       }

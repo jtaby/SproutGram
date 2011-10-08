@@ -41,9 +41,42 @@ body {
 }
 
 .details {
-  -webkit-transform-origin: 100% 50%;
+  float:left;
+
   width:250px;
   margin-left:-250px;
+
+  -webkit-transform-origin: 100% 50%;
+}
+
+.comments {
+  float:right;
+
+  width:250px;
+  margin-right:-250px;
+  max-height:250px;
+  background: #fff000;
+
+  -webkit-transform-origin: 0% 50%;
+  -webkit-overflow-scrolling: touch;
+  overflow: scroll;
+}
+
+.comments h2 {
+  padding-left:10px;
+  background: #fff000;
+  font-size: 24px;
+  font-family: "Helvetica Neue";
+  font-weight: bolder;
+}
+
+.comment {
+  padding:10px;
+  font-size: 14px;
+  font-family: "Helvetica Neue";
+  z-index:20;
+
+  -webkit-transform: translate3d(0,0,0);
 }
 
 .username {
@@ -52,9 +85,9 @@ body {
   font-size: 18px;
   font-family: "Helvetica Neue";
   font-weight: bolder;
-  z-index:20;
-  -webkit-transform: translate3d(0,0,0);
   margin-top:10px;
+
+  -webkit-transform: translate3d(0,0,0);
 }
 
 .title {
@@ -62,7 +95,9 @@ body {
   background: #fff000;
   font-size: 14px;
   font-family: "Helvetica Neue";
-  z-index:20;
-  -webkit-transform: translate3d(0,0,0);
   max-height:50px;
+
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-overflow-scrolling: touch;
+  overflow: scroll;
 }

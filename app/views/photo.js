@@ -52,11 +52,6 @@ SproutGram.PhotoView = SC.View.extend({
     }
   },
 
-  click: function() {
-    window.shit = this;
-    this.tapEnd();
-  },
-
   pinchChange: function(recognizer) {    
     var newScale = recognizer.get('scale');
     var curScale = this.$().css('scale');
@@ -134,12 +129,20 @@ SproutGram.PhotoView = SC.View.extend({
     this.$('.details').stop()[func]({
       rotateY: Math.PI
     }, 1000, "easeOutExpo");
+
+    this.$('.comments').stop()[func]({
+      rotateY: -Math.PI
+    }, 1000, "easeOutExpo");
   },
   
   _showDetails: function(instant) {
     var func = (instant === undefined)? 'animate' : 'css';
 
     this.$('.details').stop()[func]({
+      rotateY: 0
+    }, 1000, "easeOutElastic");
+
+    this.$('.comments').stop()[func]({
       rotateY: 0
     }, 1000, "easeOutElastic");
   },
