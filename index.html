@@ -14,16 +14,16 @@
         {{#view SproutGram.PhotoView classNames="photo"}}
           <div class="content-wrapper">
             <img class="image_canvas" {{bindAttr src="parentView.content.standard_res"}} height="256" width="256">
-            <div class="details">
-              <div class="title">{{title}}</div>
-              <div class="username">{{username}}</div>
-            </div>
-            <div class="comments">
-              <h2>Comments</h2>
-              {{#each parentView.content.comments}}
-                <div class="comment"><b>{{commenter}}:</b> {{text}}</div>
-              {{/each}}
-            </div>
+            <!--<div class="details">-->
+              <!--<div class="title">{{title}}</div>-->
+              <!--<div class="username">{{username}}</div>-->
+            <!--</div>-->
+            <!--<div class="comments">-->
+              <!--<h2>Comments</h2>-->
+              <!--{{#each parentView.content.comments}}-->
+                <!--<div class="comment"><b>{{commenter}}:</b> {{text}}</div>-->
+              <!--{{/each}}-->
+            <!--</div>-->
           </div>
         {{/view}}
       {{/collection}}

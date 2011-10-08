@@ -37,7 +37,6 @@ SproutGram.PhotoView = SC.View.extend({
     
   willInsertElement: function() {
     this.$().css(this._resetPosition());
-    this._hideDetails(true);
   },
     
   //.................................................................
@@ -58,7 +57,7 @@ SproutGram.PhotoView = SC.View.extend({
     
     var boundedScale = Math.max(1,Math.min(1.8, curScale * newScale));
     $('#curtain').css('opacity',boundedScale-1);
-    
+    this.$().css('z-index',10)
     this.$().css('scale',function(index, value) {
       return newScale * value
     });
@@ -81,8 +80,8 @@ SproutGram.PhotoView = SC.View.extend({
 
   panChange: function(recognizer) {
     var val = recognizer.get('translation');
-  
     this.$().css({
+      zIndex: 10,
       translateX: '%@=%@'.fmt((val.x < 0)? '-' : '+',Math.abs(val.x)),
       translateY: '%@=%@'.fmt((val.y < 0)? '-' : '+',Math.abs(val.y))
     });
@@ -118,7 +117,9 @@ SproutGram.PhotoView = SC.View.extend({
       duration: animationDuration,
       easing: easing,
       complete: function() {
-        window.setTimeout(function(){self._showDetails();},200);
+        self.$('.content-wrapper').append(self._generateHTMLSnippet());
+        self._hideDetails(true);
+        self._showDetails();
       }
     });       
   },
@@ -173,6 +174,7 @@ SproutGram.PhotoView = SC.View.extend({
       complete: function() { 
         $('#curtain').css('z-index',0);
         self.$().css('z-index',1);
+        self.$('.details').remove();
       }
     });
   },  
@@ -190,6 +192,29 @@ SproutGram.PhotoView = SC.View.extend({
       width: pictureDimension,
       height: pictureDimension
     };
+  },
+
+  //.................................................................
+  // HTML
+  
+  _generateHTMLSnippet: function() {
+    var title = this.getPath('parentView.content.title');
+    var username = this.getPath('parentView.content.username');
+    var comments = '';
+    
+    this.getPath('parentView.content.comments').forEach(function(comment) {
+      comments += '<div class="comment"><b>'+comment.commenter+': </b> '+comment.text+'</div>';
+    });
+
+
+    return '<div class="details">\
+      <div class="title">'+title+'</div>\
+      <div class="username">'+username+'</div>\
+    </div>\
+    <div class="comments">\
+      <h2>Comments</h2>\
+      '+comments+'\
+    </div>';
   }
 
 });
