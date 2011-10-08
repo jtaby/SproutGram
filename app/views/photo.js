@@ -200,21 +200,21 @@ SproutGram.PhotoView = SC.View.extend({
   _generateHTMLSnippet: function() {
     var title = this.getPath('parentView.content.title');
     var username = this.getPath('parentView.content.username');
-    var comments = '';
-    
-    this.getPath('parentView.content.comments').forEach(function(comment) {
-      comments += '<div class="comment"><b>'+comment.commenter+': </b> '+comment.text+'</div>';
-    });
 
+    var html = '<div class="details">';
+       html += '  <div class="title">'+title+'</div>';
+       html += '  <div class="username">'+username+'</div>';
+       html += '</div>';
+       html += '<div class="comments">';
+       html += '  <h2>Comments</h2>';
 
-    return '<div class="details">\
-      <div class="title">'+title+'</div>\
-      <div class="username">'+username+'</div>\
-    </div>\
-    <div class="comments">\
-      <h2>Comments</h2>\
-      '+comments+'\
-    </div>';
+       this.getPath('parentView.content.comments').forEach(function(comment) {
+         html += '<div class="comment"><b>'+comment.commenter+': </b> '+comment.text+'</div>';
+       });
+
+       html += '</div>';
+
+    return html;
   }
 
 });
