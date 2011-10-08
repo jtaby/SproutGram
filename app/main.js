@@ -20,7 +20,7 @@ SproutGram.PhotosView = SC.CollectionView.extend({
 $(document).ready(function() {
 
   $.ajax({
-    url:'https://api.instagram.com/v1/media/popular?access_token=6668562.f59def8.29acda9c153b49448c0948359f774626',
+    url:'https://api.instagram.com/v1/media/popular?client_id=92cf548d90fa4b98b4a5cdc5f9f70999',
     dataType: "jsonp",
 
     success:function(response){
